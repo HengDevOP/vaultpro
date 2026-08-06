@@ -1,0 +1,29 @@
+name: VaultPro
+version: "1.0"
+main: org.khmc.vaultpro.VaultProPlugin
+api-version: "1.21"
+authors: [mcserver.cam]
+folia-supported: true
+softdepend: [Settings]
+
+commands:
+  v:
+    description: VaultPro management command.
+    permission: vaultpro.admin
+    usage: /v <add/reset/take> <player> <amount>
+  pay:
+    description: Pay another player money.
+    usage: /pay <player> <amount>
+  top:
+    description: Open the top balance leaderboards GUI.
+    aliases: [baltop, moneytop]
+    permission: vaultpro.top
+    usage: /top [page]
+
+permissions:
+  vaultpro.top:
+    description: Allows opening /top GUI.
+    default: true
+  vaultpro.admin:
+    description: Allows admin commands.
+    default: op

@@ -1,0 +1,10 @@
+# =========================================================================
+# VaultPro Economy Configuration
+# =========================================================================
+
+# Format type can be COMPACT (e.g. $ 500, $ 6.00K) or GROUPED (e.g. $ 6,000)
+formatted: COMPACT
+
+prefix:
+  symbol: "$"
+  colorFomatted: "&a"
