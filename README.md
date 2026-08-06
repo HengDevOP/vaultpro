@@ -1,2 +1,2 @@
-# ultimatesmp
+# VaultPro
 A Minecraft Economy SMP
