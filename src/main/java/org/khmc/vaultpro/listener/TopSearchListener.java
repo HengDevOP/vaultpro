@@ -1,5 +1,7 @@
 package org.khmc.vaultpro.listener;
 
+import io.papermc.paper.event.player.AsyncChatEvent;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -37,14 +39,28 @@ public class TopSearchListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onChat(AsyncPlayerChatEvent event) {
+    public void onPaperChat(AsyncChatEvent event) {
+        Player player = event.getPlayer();
+        TopGUI gui = awaitingSearch.remove(player.getUniqueId());
+        if (gui == null) return;
+
+        event.setCancelled(true);
+        String targetName = PlainTextComponentSerializer.plainText().serialize(event.message()).trim();
+        processSearch(player, gui, targetName);
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onLegacyChat(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
         TopGUI gui = awaitingSearch.remove(player.getUniqueId());
         if (gui == null) return;
 
         event.setCancelled(true);
         String targetName = event.getMessage().trim();
+        processSearch(player, gui, targetName);
+    }
 
+    private void processSearch(Player player, TopGUI gui, String targetName) {
         if (targetName.equalsIgnoreCase("cancel")) {
             SchedulerUtil.runTaskEntity(plugin, player, () -> {
                 player.sendMessage(ColorUtil.parse("&c✦ " + ColorUtil.toSmallCaps("search cancelled.")));

@@ -62,7 +62,7 @@ public class TopGUI implements Listener {
             int validPage = Math.max(1, Math.min(page, totalPages));
 
             SchedulerUtil.runTaskEntity(plugin, player, () -> {
-                String title = "&8ᴛᴏᴘ ʙᴀʟᴀɴᴄᴇs &7(" + validPage + "/" + totalPages + ")";
+                String title = "&8" + ColorUtil.toSmallCaps("top balances") + " &7(" + validPage + "/" + totalPages + ")";
                 Inventory inv = Bukkit.createInventory(new TopHolder(validPage, totalPages, entries), 54, ColorUtil.parse(title));
 
                 populate(inv, entries, validPage, totalPages, highlightedPlayerName);
@@ -87,13 +87,13 @@ public class TopGUI implements Listener {
             if (meta != null) {
                 meta.setOwningPlayer(Bukkit.getOfflinePlayer(entry.uuid()));
                 boolean isHighlight = highlightedName != null && entry.name().equalsIgnoreCase(highlightedName);
-                String prefix = rank <= 3 ? "&e&l#" + rank : "&a#" + rank;
-                if (isHighlight) prefix = "&d&l★ #" + rank;
+                String prefix = rank <= 3 ? "&e#" + rank : "&a#" + rank;
+                if (isHighlight) prefix = "&d★ #" + rank;
 
                 meta.displayName(ColorUtil.parse(prefix + " &f" + entry.name()));
 
                 List<Component> lore = new ArrayList<>();
-                lore.add(ColorUtil.parse("&7" + ColorUtil.toSmallCaps("balance: ") + "&a" + plugin.getVaultService().formatCurrency(entry.balance())));
+                lore.add(ColorUtil.parse(plugin.getVaultService().formatCurrency(entry.balance())));
                 if (isHighlight) {
                     lore.add(ColorUtil.parse("&d• " + ColorUtil.toSmallCaps("searched player")));
                 }
@@ -115,15 +115,15 @@ public class TopGUI implements Listener {
 
         // Arrow Previous (Slot 45)
         if (page > 1) {
-            inv.setItem(45, makeItem(Material.ARROW, "&a&l« " + ColorUtil.toSmallCaps("previous page"), List.of("&7Go to page " + (page - 1))));
+            inv.setItem(45, makeItem(Material.ARROW, "&a« " + ColorUtil.toSmallCaps("previous page"), List.of("&7" + ColorUtil.toSmallCaps("go to page ") + (page - 1))));
         }
 
         // Hopper Search (Slot 49)
-        inv.setItem(49, makeItem(Material.HOPPER, "&e&l" + ColorUtil.toSmallCaps("search player"), List.of("&7Click to search for a specific player.")));
+        inv.setItem(49, makeItem(Material.HOPPER, "&e" + ColorUtil.toSmallCaps("search player"), List.of("&7" + ColorUtil.toSmallCaps("click to search for a specific player"))));
 
         // Arrow Next (Slot 53)
         if (page < totalPages) {
-            inv.setItem(53, makeItem(Material.ARROW, "&a&l" + ColorUtil.toSmallCaps("next page") + " »", List.of("&7Go to page " + (page + 1))));
+            inv.setItem(53, makeItem(Material.ARROW, "&a" + ColorUtil.toSmallCaps("next page") + " »", List.of("&7" + ColorUtil.toSmallCaps("go to page ") + (page + 1))));
         }
     }
 

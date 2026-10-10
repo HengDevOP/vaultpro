@@ -6,6 +6,7 @@ group = 'org.khmc'
 version = '1.0-SNAPSHOT'
 
 repositories {
+    mavenLocal()
     mavenCentral()
     maven {
         name = 'papermc'
@@ -18,7 +19,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly 'io.papermc.paper:paper-api:1.21.1-R0.1-SNAPSHOT'
+    compileOnly 'io.papermc.paper:paper-api:1.21.11-R0.1-SNAPSHOT'
     compileOnly 'me.clip:placeholderapi:2.11.6'
     compileOnly fileTree(dir: '../Settings/build/libs', include: ['*.jar'])
 }
@@ -50,3 +51,10 @@ processResources {
 jar {
     archiveClassifier.set('')
 }
+
+task copyToServer(type: Copy) {
+    from jar
+    into file('/Users/hochenheng/Desktop/SurvivalSMP/plugins')
+}
+
+build.finalizedBy(copyToServer)

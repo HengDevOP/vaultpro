@@ -8,9 +8,8 @@ softdepend: [Settings]
 
 commands:
   v:
-    description: VaultPro management command.
-    permission: vaultpro.admin
-    usage: /v <add/reset/take> <player> <amount>
+    description: View your balance or manage VaultPro economy.
+    usage: /v [add/reset/take/wit] <player> <amount>
   pay:
     description: Pay another player money.
     usage: /pay <player> <amount>

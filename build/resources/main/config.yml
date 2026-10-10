@@ -1,6 +1,25 @@
-# =========================================================================
-# VaultPro Economy Configuration
-# =========================================================================
+# ╔═════════════════════════════════════════════════════════════════════════╗
+# ║                                                                         ║
+# ║   ██╗   ██╗█████╗ ██╗   ██╗██╗  ████████╗██████╗ ██████╗  ██████╗       ║
+# ║   ██║   ██║██╔══██╗██║   ██║██║  ╚══██╔══╝██╔══██╗██╔══██╗██╔═══██╗      ║
+# ║   ██║   ██║███████║██║   ██║██║     ██║   ██████╔╝██████╔╝██║   ██║      ║
+# ║   ╚██╗ ██╔╝██╔══██║██║   ██║██║     ██║   ██╔═══╝ ██╔══██╗██║   ██║      ║
+# ║    ╚████╔╝ ██║  ██║╚██████╔╝███████╗██║   ██║     ██║  ██║╚██████╔╝      ║
+# ║     ╚═══╝  ╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝   ╚═╝     ╚═╝  ╚═╝ ╚═════╝       ║
+# ║                                                                         ║
+# ║                  ✦ Premium VaultPro Economy System ✦                   ║
+# ╚═════════════════════════════════════════════════════════════════════════╝
+#
+# ┌─────────────────────────────────────────────────────────────────────────┐
+# │ Available PlaceholderAPI Placeholders (%vaultpro_<placeholder>%):        │
+# ├─────────────────────────────────────────────────────────────────────────┤
+# │ • %vaultpro_balance%        - Player's formatted balance (number only)  │
+# │ • %vaultpro_top_me%         - Player's username                         │
+# │ • %vaultpro_top_money%      - Player's balance with symbol & color      │
+# │ • %vaultpro_top_rank%       - Player's leaderboard rank (e.g. 1, N/A)  │
+# │ • %vaultpro_top_<N>_player% - Username of player at rank N              │
+# │ • %vaultpro_top_<N>_money%  - Formatted balance of player at rank N     │
+# └─────────────────────────────────────────────────────────────────────────┘
 
 # Format type can be COMPACT (e.g. $ 500, $ 6.00K) or GROUPED (e.g. $ 6,000)
 formatted: COMPACT
@@ -8,3 +27,13 @@ formatted: COMPACT
 prefix:
   symbol: "$"
   colorFomatted: "&a"
+
+default: 500
+
+# Backup configuration
+backup:
+  # Enable or disable automatic backups of the economy data
+  enabled: true
+  maxBackups: 10
+  backupInterval: 21600 # in seconds (6 hours)
+  backupDirectory: "backups"

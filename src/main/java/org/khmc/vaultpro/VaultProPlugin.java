@@ -2,6 +2,7 @@ package org.khmc.vaultpro;
 
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.khmc.vaultpro.backup.BackupManager;
 import org.khmc.vaultpro.commands.PayCommand;
 import org.khmc.vaultpro.commands.TopCommand;
 import org.khmc.vaultpro.commands.VaultProCommand;
@@ -18,6 +19,7 @@ public class VaultProPlugin extends JavaPlugin {
     private VaultServiceImpl vaultService;
     private TopGUI topGUI;
     private org.khmc.vaultpro.listener.MoneyPaperListener moneyPaperListener;
+    private BackupManager backupManager;
 
     @Override
     public void onEnable() {
@@ -27,6 +29,7 @@ public class VaultProPlugin extends JavaPlugin {
         topGUI = new TopGUI(this);
         new TopSearchListener(this);
         moneyPaperListener = new org.khmc.vaultpro.listener.MoneyPaperListener(this);
+        backupManager = new BackupManager(this);
 
         // Register VaultService
         getServer().getServicesManager().register(
@@ -61,6 +64,11 @@ public class VaultProPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        org.bukkit.Bukkit.getScheduler().cancelTasks(this);
+        if (backupManager != null) {
+            backupManager.performBackup();
+            backupManager.stop();
+        }
         getLogger().info("VaultPro has been disabled.");
     }
 
@@ -78,5 +86,9 @@ public class VaultProPlugin extends JavaPlugin {
 
     public org.khmc.vaultpro.listener.MoneyPaperListener getMoneyPaperListener() {
         return moneyPaperListener;
+    }
+
+    public BackupManager getBackupManager() {
+        return backupManager;
     }
 }

@@ -75,6 +75,9 @@ public class VaultServiceImpl implements VaultService {
     }
 
     public double getDefaultBalance(String currency) {
+        if (plugin.getConfig().contains("default")) {
+            return plugin.getConfig().getDouble("default", 500.0);
+        }
         Object obj = plugin.getConfig().get("vaultpro.money");
         if (obj instanceof java.util.List) {
             java.util.List<?> list = (java.util.List<?>) obj;
@@ -91,9 +94,9 @@ public class VaultServiceImpl implements VaultService {
             }
         } else if (obj instanceof org.bukkit.configuration.ConfigurationSection) {
             org.bukkit.configuration.ConfigurationSection section = (org.bukkit.configuration.ConfigurationSection) obj;
-            return section.getDouble("default", 0.0);
+            return section.getDouble("default", 500.0);
         }
-        return 0.0;
+        return 500.0;
     }
 
     public String getFormatColor(String currency) {
@@ -258,7 +261,7 @@ public class VaultServiceImpl implements VaultService {
 
         java.util.List<TopPlayerEntry> list = new java.util.ArrayList<>();
         synchronized (lock) {
-            String sql = "SELECT uuid, balance FROM vault_balances WHERE currency = 'money' ORDER BY balance DESC LIMIT 10;";
+            String sql = "SELECT uuid, balance FROM vault_balances WHERE currency = 'money' ORDER BY balance DESC LIMIT 100;";
             try (Connection conn = getConnection();
                  PreparedStatement pstmt = conn.prepareStatement(sql);
                  ResultSet rs = pstmt.executeQuery()) {
